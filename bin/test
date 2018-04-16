@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "mosaic"
+require "mosaic/binary_threshold_profiler"
+require "mosaic/binary_bucket_mode_profiler"
+require "mosaic/multi_bucket_mode_profiler"
+require "mosaic/mean_profiler"
+
+$logger.level = Logger::INFO
+
+config =
+  Mosaic::Config.new(
+    base_image: "/Users/jbodah/repos/mosaic/test/support/penny1.jpg",
+    source_images: Dir["/Users/jbodah/repos/mosaic/test/support/facebook/*.jpg"],
+    num_regions_horizontal: 60,
+    num_regions_vertical: 60,
+    desired_width: 30 * 60,
+    desired_height: 30 * 60,
+    profiler: Mosaic::MeanProfiler.new
+  )
+
+Mosaic.create(config)
